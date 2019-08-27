@@ -96,3 +96,24 @@ while True: #입력값 루프, 0 입력 시 루프 종료
         break
     else:
         print("1(Comp) 2(Rev) 3(Rev_Comp)")
+a=len(yumgi)
+rna = []
+def transcription(yumgi) :
+    rna = []
+    for i in yumgi :
+        if i == 'A' :
+            rna.append(U)
+        if i == 'T' :
+            rna.append(A)
+        if i == 'G' :
+            rna.append(C)
+        if i == 'C' :
+            rna.append(G)
+    return rna
+
+def find_start(rna) :
+    for i in range(a) :
+        if rna[i] == 'A' : 
+            if rna[i+1] == 'U' :
+                if rna[i+2] == 'G' :
+                    return i
