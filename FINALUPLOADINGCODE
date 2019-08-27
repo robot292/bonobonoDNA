@@ -1,98 +1,19 @@
-###최종본 
-dna = input('염기서열을 입력해줘:') ### 염기서열을 사용자로부터 받는다.
-fullprimer = input('프라이머 입력해줘:') ### 프라이머를 사용자로부터 받는다.
-checker = True 
-print("주형가닥 DNA는",dna) ### 사용자가 입력한 염기서열이 맞는지 확인 하기 위해서 한번 출력시켜준다. 
-print("primer의 서열은",fullprimer) ### 사용자가 입력한 프라이머가 맞는지 확인 하기 위해서 한번 출력시켜준다. 
+# DNA 염기서열과 프라이머를 입력받아 절편생성. 프라이머 위치 파악. 상보적인 염기서열을 알아내는 프로젝트입니다. 
+# 단점: 오버랩 PCR시 사용하는 일부 겹치는 프라이머의 경우가 인식이 되지 않음.
+import difflib
+
+dna = input('염기서열을 입력해줘:').upper() ### 염기서열을 사용자로부터 받는다.
+fullprimer = input('프라이머 입력해줘:').upper() ### 프라이머를 사용자로부터 받는다.
+
+print("입력한 염기", dna)
+print("입력한 프라이머",fullprimer)
+
 yumgi = list(dna) ### DNA 주형가닥을 YUMGI의 형채로 list로 저장
 primer = list(fullprimer) ### 프라이머를 list의 형태로 저장
 
-a=len(yumgi)
-num=0
-yumgi.insert(0,0)
-for i in range(a):
-    del yumgi[0]
-    for j in range(len(primer)):
-        if checker:
-            if yumgi[int(j)]== primer[int(j)]:
-                checker=True
-            else:
-                checker=False
-        else:
-            checker=False
-    if checker:
-        num +=1
-        print(num, '번째 서열에서 프라이머가 존재합니다')
-        checker=True
-    else:
-        num +=1
-        checker=True
-
-def enzyme(dna,fullprimer) :
-    dna_saver = []
-    cnt = 0
-    check = 0
-    while len(dna[0:-1] ) != 1 :
-        for i in range(len(dna)-1) :
-            if dna[i:i+len(fullprimer)] == fullprimer :
-                dna1 = dna[0:i+1]
-                print(dna1)
-                check += 1
-                break
-        else : 
-            print(dna)
-            cnt += 1
-            break
-        if check == 0 :
-            break
-        dna_saver.append(dna1)
-        cnt +=1
-        dna = dna[len(dna1):len(dna)]
-    if check != 0 :
-        print('RFLP의 갯수는' , cnt , '입니다')
-    else :
-        print('만들어진 절편은 존재하지 않습니다.')
-enzyme(dna,fullprimer)
-
-
-def comp(seq):  #상보적 방식 함수
-    comp_dict={'A':'T', 'T':'A', 'C':'G', 'G':'C'}
-    seq_comp=""
-    for char in seq:
-        if char in comp_dict:
-            seq_comp = seq_comp + comp_dict[char]
-        else:
-            seq_comp = seq_comp + '?'
-    return seq_comp
- 
-def rev(seq): #역순 방식 함수
-    comp_dict={'A':'A', 'T':'T', 'C':'C', 'G':'G'}
-    rev_str = "".join(reversed(seq))
-    seq_rev = ""
-    for char in rev_str:
-        if char in comp_dict:
-            seq_rev = seq_rev + comp_dict[char]
-        else:
-            seq_rev = seq_rev + '?'
-    return seq_rev
- 
-def rev_comp(seq): #상보적 역순 방식 함수
-    return (rev(comp(seq)))
- 
-while True: #입력값 루프, 0 입력 시 루프 종료
-    src = dna
-    cnvt = int(input("1(Comp) 2(Rev) 3(Rev_Comp)"))
-    if cnvt >= 1 and cnvt <=3:
-        if cnvt == 1:
-            rslt = comp(src)
-            print(src, "->", rslt)
-        elif cnvt == 2:
-            rslt = rev(src)
-            print(src, "->", rslt)
-        else:
-            rslt = rev_comp(src)
-            print(src,"->",rslt)
-    elif cnvt == 0:
-        break
-    else:
-        print("1(Comp) 2(Rev) 3(Rev_Comp)")
+d = difflib.Differ()
+diff = d.compare(yumgi, primer)
+result = str(''.join(diff))
+result = result.replace(' ',"")
+print(result)
+print("염기 앞에 아무것도 안붙은 부분들이 상보적으로 붙을 수 있는 부분들입니다")
