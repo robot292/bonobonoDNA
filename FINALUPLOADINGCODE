@@ -22,7 +22,7 @@ for i in range(a):
             checker=False
     if checker:
         num +=1
-        print(num, '번째 서열에서 프라이머가 존재합니다')
+        print(num, '~', num+len(primer)-1, '번째 서열에서 프라이머가 존재합니다')
         checker=True
     else:
         num +=1
