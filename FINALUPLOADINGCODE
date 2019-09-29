@@ -7,20 +7,20 @@ print("primer의 서열은",fullprimer) ### 사용자가 입력한 프라이머�
 yumgi = list(dna) ### DNA 주형가닥을 YUMGI의 형채로 list로 저장
 primer = list(fullprimer) ### 프라이머를 list의 형태로 저장
 
-a=len(yumgi)
+a=len(yumgi) # 프라이머가 염기서열의 몇번째에 붙을 수 있는지 알려주는 코드
 num=0
 yumgi.insert(0,0)
 for i in range(a):
     del yumgi[0]
     for j in range(len(primer)):
-        if checker:
+        if checker: # 만약 프라이머가 염기서열에 붙을 수 있다면
             if yumgi[int(j)]== primer[int(j)]:
                 checker=True
             else:
                 checker=False
         else:
             checker=False
-    if checker:
+    if checker: #checker에서 염기서열이 붙을 수 있다고 확인되면 어디에 붙을 수 있는지 알려줌
         num +=1
         print(num, '번째 서열에서 프라이머가 존재합니다')
         checker=True
@@ -28,7 +28,7 @@ for i in range(a):
         num +=1
         checker=True
 
-def enzyme(dna,fullprimer) :
+def enzyme(dna,fullprimer) : # 프라이머로 인해 잘리게 될 때 절편의 개수를 알려주는 함수
     dna_saver = []
     cnt = 0
     check = 0
@@ -55,7 +55,7 @@ def enzyme(dna,fullprimer) :
 enzyme(dna,fullprimer)
 
 
-def comp(seq):  #상보적 방식 함수
+def comp(seq):  #상보적인 염기 서열로 바꿔주는 함수
     comp_dict={'A':'T', 'T':'A', 'C':'G', 'G':'C'}
     seq_comp=""
     for char in seq:
@@ -65,7 +65,7 @@ def comp(seq):  #상보적 방식 함수
             seq_comp = seq_comp + '?'
     return seq_comp
  
-def rev(seq): #역순 방식 함수
+def rev(seq): #역순의 염기서열로 바꿔주는 함수
     comp_dict={'A':'A', 'T':'T', 'C':'C', 'G':'G'}
     rev_str = "".join(reversed(seq))
     seq_rev = ""
@@ -76,10 +76,10 @@ def rev(seq): #역순 방식 함수
             seq_rev = seq_rev + '?'
     return seq_rev
  
-def rev_comp(seq): #상보적 역순 방식 함수
+def rev_comp(seq): #상보적인 서열의 역순으로 만들어  
     return (rev(comp(seq)))
  
-while True: #입력값 루프, 0 입력 시 루프 종료
+while True: #입력값 루프, 0 입력 시 루프 종료 // 실행하는 함수에 따라서 어느 서열에서 프라이머가 어디에 어떻게 붙어있는지 알려줌
     src = dna
     cnvt = int(input("1(Comp) 2(Rev) 3(Rev_Comp)"))
     if cnvt >= 1 and cnvt <=3:
